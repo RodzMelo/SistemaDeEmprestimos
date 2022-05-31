@@ -61,6 +61,11 @@ namespace SistemaDeEmprestimos.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var valor = Convert.ToDecimal(emprestimo.ValorEmprestimo.ToString().Replace(".", ","));
+
+                //emprestimo.ValorEmprestimo = Convert.ToDouble(emprestimo.ValorEmprestimo.ToString().Replace(".", ","));
+                //emprestimo.ValorPago = Convert.ToDouble(emprestimo.ValorPago.ToString().Replace(".", ","));
+                //emprestimo.ValorParcela = Convert.ToDouble(emprestimo.ValorParcela.ToString().Replace(".", ","));
                 _context.Add(emprestimo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

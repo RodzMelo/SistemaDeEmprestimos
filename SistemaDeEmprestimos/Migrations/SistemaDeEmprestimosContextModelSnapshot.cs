@@ -86,26 +86,26 @@ namespace SistemaDeEmprestimos.Migrations
                     b.Property<int>("DiaVencimento")
                         .HasColumnType("int");
 
-                    b.Property<double>("QuantidadeParcelas")
-                        .HasColumnType("float");
+                    b.Property<int>("QuantidadeParcelas")
+                        .HasColumnType("int");
 
                     b.Property<int>("QuantidadeParcelasPagas")
                         .HasColumnType("int");
 
-                    b.Property<double>("ValorEmprestimo")
-                        .HasColumnType("float");
+                    b.Property<decimal>("ValorEmprestimo")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("ValorJuros")
-                        .HasColumnType("float");
+                    b.Property<decimal>("ValorJuros")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("ValorPago")
-                        .HasColumnType("float");
+                    b.Property<decimal>("ValorPago")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("ValorParcela")
-                        .HasColumnType("float");
+                    b.Property<decimal>("ValorParcela")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("ValorTotal")
-                        .HasColumnType("float");
+                    b.Property<decimal>("ValorTotal")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("EmprestimoId");
 

@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SistemaDeEmprestimos.Data;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace SistemaDeEmprestimos
 {
@@ -35,6 +37,25 @@ namespace SistemaDeEmprestimos
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var defaultDateCulture = "pt-BR";
+
+            var ci = new CultureInfo(defaultDateCulture);
+            ci.NumberFormat.NumberDecimalSeparator = ".";
+            ci.NumberFormat.CurrencyDecimalSeparator = ".";
+            
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(ci),
+                SupportedCultures = new List<CultureInfo>
+            {
+                ci,
+            },
+            SupportedUICultures = new List<CultureInfo>
+            {
+                ci,
+            }
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -56,7 +77,7 @@ namespace SistemaDeEmprestimos
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Clientes}/{action=Index}/{id?}");
             });
         }
     }

@@ -14,23 +14,23 @@ namespace SistemaDeEmprestimos.Models
 
         [Required(ErrorMessage = " O campo é obrigatório")]
         [Display(Name = "Valor solicitado")]
-        public double ValorEmprestimo { get; set; }
+        public decimal ValorEmprestimo { get; set; }
 
         [Required(ErrorMessage = " O campo é obrigatório")]
-        [Display(Name = "Quantidade de parcelas")]
-        public double QuantidadeParcelas { get; set; }
+        [Display(Name = "Nº de parcelas")]
+        public int QuantidadeParcelas { get; set; }
 
         [Required(ErrorMessage = " O campo é obrigatório")]
         [Display(Name = "Porcentagem dos juros")]
-        public double ValorJuros { get; set; }
-
+        public decimal ValorJuros { get; set; }
+        
         [Required(ErrorMessage = " O campo é obrigatório")]
         [Display(Name = "Valor total")]
-        public double ValorTotal { get; set; }
+        public decimal ValorTotal { get; set; }
 
         [Required(ErrorMessage = " O campo é obrigatório")]
         [Display(Name = "Valor da parcela")]
-        public double ValorParcela { get; set; }
+        public decimal ValorParcela { get; set; }
 
         [Required(ErrorMessage = " O campo é obrigatório")]
         [Display(Name = "Dia do vencimento")]
@@ -40,7 +40,7 @@ namespace SistemaDeEmprestimos.Models
         public int QuantidadeParcelasPagas { get; set; }
 
         [Display(Name = "Valor pago")]
-        public double ValorPago { get; set; }
+        public decimal ValorPago { get; set; }
         
         [Required(ErrorMessage = " O campo é obrigatório")]
         [Display(Name = "Data da solicitação")]
