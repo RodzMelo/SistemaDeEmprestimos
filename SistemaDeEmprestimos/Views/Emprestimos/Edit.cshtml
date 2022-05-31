@@ -1,0 +1,116 @@
+﻿@model SistemaDeEmprestimos.Models.Emprestimo
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Atualizações de empréstimos</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EmprestimoId" />
+            <div class="form-group">
+                <label asp-for="ClienteId" class="control-label"></label>
+                <select asp-for="ClienteId" class="form-control" asp-items="ViewBag.ClienteId"></select>
+                <span asp-validation-for="ClienteId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorEmprestimo" class="control-label"></label>
+                <input asp-for="ValorEmprestimo" id="txtValorEmprestimo" class="form-control" />
+                <span asp-validation-for="ValorEmprestimo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantidadeParcelas" class="control-label"></label>
+                <input asp-for="QuantidadeParcelas" id="txtQuantidadeParcelas" class="form-control" />
+                <span asp-validation-for="QuantidadeParcelas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorJuros" class="control-label"></label>
+                <input asp-for="ValorJuros" id="txtValorJuros" onfocusout="CalcularParcelas()"  class="form-control" />
+                <span asp-validation-for="ValorJuros" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantidadeParcelasPagas" class="control-label"></label>
+                <input asp-for="QuantidadeParcelasPagas" id="txtQuantidadeParcelasPagas" onfocusout="CalcularPagas()" class="form-control" />
+                <span asp-validation-for="QuantidadeParcelasPagas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorPago" class="control-label"></label>
+                <input asp-for="ValorPago" id="txtValorPago" class="form-control" />
+                <span asp-validation-for="ValorPago" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorParcela" class="control-label"></label>
+                <input asp-for="ValorParcela" id="txtValorParcela" class="form-control" />
+                <span asp-validation-for="ValorParcela" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorTotal" class="control-label"></label>
+                <input asp-for="ValorTotal" id="txtValorTotal" class="form-control" />
+                <span asp-validation-for="ValorTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiaVencimento" class="control-label"></label>
+                <input asp-for="DiaVencimento" class="form-control" />
+                <span asp-validation-for="DiaVencimento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataEmprestimo" class="control-label"></label>
+                <input asp-for="DataEmprestimo" class="form-control" />
+                <span asp-validation-for="DataEmprestimo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataDevolucao" class="control-label"></label>
+                <input asp-for="DataDevolucao" class="form-control" />
+                <span asp-validation-for="DataDevolucao" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Devolvido" /> @Html.DisplayNameFor(model => model.Devolvido)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+
+<script type="text/javascript">
+function CalcularParcelas() {
+    let valorEmprestimo = parseFloat($("#txtValorEmprestimo").val());
+        let quantidadeParcelas = parseFloat($("#txtQuantidadeParcelas").val());
+        let valorJuros = parseFloat($("#txtValorJuros").val());
+        let valorParcela = 0;
+        let valorTotal = 0;
+        
+        valorTotal = valorEmprestimo + ((valorEmprestimo * valorJuros)/100);
+        valorParcela = valorTotal / quantidadeParcelas;
+        $("#txtValorTotal").val(valorTotal);
+        $("#txtValorParcela").val(valorParcela);
+        
+}
+
+function CalcularPagas() {
+    let valorParcela = parseFloat($("#txtValorParcela").val());
+    let total = parseFloat($("#txtValorTotal").val());
+    let parcelasPagas = parseInt($("#txtQuantidadeParcelasPagas").val());
+    let valorPago = valorParcela * parcelasPagas;
+    let valorRestante = total - valorPago;
+
+    $("#txtValorPago").val(valorPago);
+    $("#txtValorTotal").val(valorRestante);
+    alert("Valor restante do emprestimo é: "+valorRestante);
+}
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

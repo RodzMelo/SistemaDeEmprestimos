@@ -1,0 +1,101 @@
+﻿@model SistemaDeEmprestimos.Models.Emprestimo
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Cadastrar emprestimo</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ClienteId" class="control-label"></label>
+                <select asp-for="ClienteId" class ="form-control" asp-items="ViewBag.ClienteId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorEmprestimo" class="control-label"></label>
+                <input asp-for="ValorEmprestimo" id="txtValorEmprestimo" class="form-control" />
+                <span asp-validation-for="ValorEmprestimo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantidadeParcelas" class="control-label"></label>
+                <input asp-for="QuantidadeParcelas" id="txtQuantidadeParcelas" class="form-control" />
+                <span asp-validation-for="QuantidadeParcelas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorJuros" class="control-label"></label>
+                <input asp-for="ValorJuros" id="txtValorJuros" onfocusout="CalcularParcelas()"  class="form-control" />
+                <span asp-validation-for="ValorJuros" class="text-danger"></span>
+            </div>            
+            <div class="form-group invisivel">
+                <label asp-for="QuantidadeParcelasPagas" class="control-label"></label>
+                <input asp-for="QuantidadeParcelasPagas" value="0" id="txtQuantidadeParcelasPagas" class="form-control" />
+                <span asp-validation-for="QuantidadeParcelasPagas" class="text-danger"></span>
+            </div>
+            <div class="form-group invisivel">
+                <label asp-for="ValorPago" class="control-label"></label>
+                <input asp-for="ValorPago" value="0" id="txtValorPago" class="form-control" />
+                <span asp-validation-for="ValorPago" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorTotal" class="control-label"></label>
+                <input asp-for="ValorTotal" id="txtValorTotal" class="form-control" />
+                <span asp-validation-for="ValorTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValorParcela" class="control-label"></label>
+                <input asp-for="ValorParcela" id="txtValorParcela" class="form-control" />
+                <span asp-validation-for="ValorParcela" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiaVencimento" class="control-label"></label>
+                <input asp-for="DiaVencimento" class="form-control" />
+                <span asp-validation-for="DiaVencimento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataEmprestimo" class="control-label"></label>
+                <input asp-for="DataEmprestimo" class="form-control" />
+                <span asp-validation-for="DataEmprestimo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataDevolucao" class="control-label"></label>
+                <input asp-for="DataDevolucao" class="form-control" />
+                <span asp-validation-for="DataDevolucao" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check invisivel">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Devolvido" /> @Html.DisplayNameFor(model => model.Devolvido)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script type="text/javascript">
+function CalcularParcelas() {
+    let valorEmprestimo = parseFloat($("#txtValorEmprestimo").val());
+        let quantidadeParcelas = parseFloat($("#txtQuantidadeParcelas").val());
+        let valorJuros = parseFloat($("#txtValorJuros").val());
+        let valorParcela = 0;
+        let valorTotal = 0;
+        
+        valorTotal = valorEmprestimo + ((valorEmprestimo * valorJuros)/100);
+        valorParcela = valorTotal / quantidadeParcelas;
+        $("#txtValorTotal").val(valorTotal);
+        $("#txtValorParcela").val(valorParcela);
+        
+}
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
